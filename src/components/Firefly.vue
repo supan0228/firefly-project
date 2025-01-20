@@ -14,7 +14,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 // 设置引用和变量
 const threeContainer = ref(null); // 用于渲染的 DOM 容器
 
-let scene, camera, renderer, composer, particles, animationFrameId;
+let scene, camera, renderer, composer, particles, animationFrameId, controls;
 const noise = createNoise2D(); // 使用 SimplexNoise 创建噪声生成器
 let time = 0; // 时间变量，用于驱动噪声的变化
 
@@ -44,16 +44,16 @@ const initScene = () => {
   const particlesCount = isMobile ? 100 : 200; // 移动端减少粒子数量
 
   for (let i = 0; i < particlesCount; i++) {
-      const geometry = new THREE.SphereGeometry(5, 5, 5); // 创建球体
+      const geometry = new THREE.SphereGeometry(2, 5, 5); // 减小球体大小
       const material = new THREE.MeshStandardMaterial({
           emissive: new THREE.Color("#CCFF00"), // 自发光颜色
           emissiveIntensity: 1.5, // 自发光强度
       });
       const particle = new THREE.Mesh(geometry, material);
 
-      particle.position.x = Math.random() * 1000 - 500; // X
-      particle.position.y = Math.random() * 1000 - 500; // Y
-      particle.position.z = Math.random() * 1000 - 500; // Z
+      particle.position.x = Math.random() * 600 - 300; // 扩大分布范围
+      particle.position.y = Math.random() * 600 - 300;
+      particle.position.z = Math.random() * 600 - 300;
 
       particles.add(particle);
   }
@@ -68,7 +68,7 @@ const initScene = () => {
   scene.add(pointLight);
 
   // 添加相机控制器
-  const controls = new OrbitControls(camera, renderer.domElement);
+  controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true; // 添加阻尼效果使移动更平滑
   controls.dampingFactor = 0.05;
   controls.enableZoom = true;
