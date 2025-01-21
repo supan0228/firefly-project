@@ -5,7 +5,7 @@ export default defineConfig({
   base: './',
   plugins: [vue()],
   build: {
-    outDir: 'docs',
+    outDir: 'dist',
     rollupOptions: {
       output: {
         manualChunks: {
